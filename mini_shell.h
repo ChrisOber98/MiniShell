@@ -1,8 +1,12 @@
 #ifndef MINI_SHELL_H
 #define MINI_SHELL_H
 
-#include <stdio.h>
+#define BUFFER_SIZE 1024
 
-void hello_world();
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char* prompt_user();
 
 #endif // MINI_SHELL_H

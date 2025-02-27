@@ -1,9 +1,11 @@
 #include "mini_shell.h"
 #include <stdio.h>
 
-int main(int argc, char ** argv)
+int main()
 {
-    hello_world();
+    char* string = prompt_user();
+
+    printf("%s\n", string);
 
     return 0;
 }
