@@ -1,18 +1,19 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -g
-OBJ = main.o mini_shell.o
+CFLAGS = -Wall -Wextra -Iinclude
+SRC = mini_shell.c input.c main.c
+OBJ = $(SRC:.c=.o)
+TARGET = mini_shell
 
-minishell: $(OBJ)
-	$(CC) $(CFLAGS) -o minishell $(OBJ)
+all: $(TARGET)
 
-main.o: main.c mini_shell.h
-	$(CC) $(CFLAGS) -c main.c
+$(TARGET): $(OBJ)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ)
 
-minishell.o: mini_shell.c mini_shell.h
-	$(CC) $(CFLAGS) -c minishell.c
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f minishell $(OBJ)
+	rm -f $(OBJ) $(TARGET)
 
-run:
-	./minishell
+run: $(TARGET)
+	./$(TARGET)

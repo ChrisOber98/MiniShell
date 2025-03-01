@@ -1,28 +1,16 @@
-#include "mini_shell.h"
+#include "shell.h"
 
-char* prompt_user()
+void run()
 {
-    // Malloc Space for input buffer
-    char* input = malloc(BUFFER_SIZE);
-    if (input == NULL)
+    char* input = get_user_input();
+    char** tokens = tokenize_input(input);
+
+    int i = 0;
+
+    while (tokens[i] != NULL)
     {
-        perror("Unable to allocate memory");
-        exit(EXIT_FAILURE);
+        printf("%s\n", tokens[i]);
+        i += 1;
     }
-
-    // Print Prompt
-    printf("$ ");
-
-    // Get Input
-    if (fgets(input, BUFFER_SIZE, stdin) == NULL) 
-    {
-        // Handle EOF or error
-        free(input);
-        return NULL;  
-    }
-
-    // Remove the newline character, if present
-    input[strcspn(input, "\n")] = 0;
-
-    return input;
 }
+
