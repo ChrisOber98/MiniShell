@@ -4,16 +4,27 @@
 #define BUFFER_SIZE 1024
 #define TOK_SIZE 64
 #define TOK_DELIM " \t\r\n\a"
+#define HISTORY_SIZE 100
+
+#include "linked_list.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <ctype.h>
+
+// ---- history.c -----
+extern Node *history;
+extern int history_count;
+
+void store_command(char * command);
 
 // ----- input.c -----
 char* get_user_input();
 char** tokenize_input(char* input);
+int validate_command(const char *str);
 
 // ----- executor.c -----
 int launch(char **args);
