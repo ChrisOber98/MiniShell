@@ -48,7 +48,7 @@ char* get_user_input()
 
 char** tokenize_input(char* input)
 {
-    int buff_size = TOK_SIZE
+    int buff_size = TOK_SIZE;
     int position = 0;
 
     char **tokens = malloc(buff_size * sizeof(char*));
@@ -78,7 +78,7 @@ char** tokenize_input(char* input)
                 exit(EXIT_FAILURE);
             }
         }
-        token = strtok(NULL, TOK_DELIM)
+        token = strtok(NULL, TOK_DELIM);
     }
     // Append NULL to end of tokens list
     tokens[position] = NULL;

@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Iinclude
-SRC = mini_shell.c input.c main.c
+SRC = mini_shell.c input.c main.c builtins.c executor.c
 OBJ = $(SRC:.c=.o)
 TARGET = mini_shell
 

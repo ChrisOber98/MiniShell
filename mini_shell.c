@@ -2,15 +2,19 @@
 
 void run()
 {
-    char* input = get_user_input();
-    char** tokens = tokenize_input(input);
+    char* line;
+    char** args;
+    int status;
 
-    int i = 0;
-
-    while (tokens[i] != NULL)
+    do
     {
-        printf("%s\n", tokens[i]);
-        i += 1;
-    }
+        printf("> ");
+        line = get_user_input();
+        args = tokenize_input(line);
+        status = execute(args);
+
+        free(line);
+        free(args);
+    } while (status);
 }
 
