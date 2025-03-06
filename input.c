@@ -3,76 +3,85 @@
 char* get_user_input()
 {
     // Allocate memory for buffer
+    int buff_size = BUFFER_SIZE;
+    int position = 0;
     char* buffer = malloc(BUFFER_SIZE);
+    int c;
+
+
     if (buffer == NULL)
     {
-        perror("Memory allocation failed.");        
-        exit(1);
+        fprintf(stderr, "Memory allocation failed.\n");        
+        exit(EXIT_FAILURE);
     }
 
     // Get input from stdin
-    if (fgets(buffer, BUFFER_SIZE, stdin) != NULL)  // Use BUFFER_SIZE, not sizeof(buffer)
+    while(1)
     {
-        return buffer;
-    }
-    else
-    {
-        perror("Error reading input.");
-        free(buffer);
-        exit(1);
+        c = getchar();
+
+        // Check for end of input and handle
+        if (c == EOF || c == '\n')
+        {
+            buffer[position] = '\0';
+            return buffer;
+        }
+        else
+        {
+            buffer[position] = c;
+        }
+        position++;
+
+        // Check for reallcation
+        if (position >= buff_size)
+        {
+            buff_size += BUFFER_SIZE;
+            buffer = realloc(buffer, BUFFER_SIZE);
+            if (buffer == NULL)
+            {
+                fprintf(stderr, "Memory allocation failed.\n");        
+                exit(EXIT_FAILURE);
+            }
+        }
     }
 }
 
 char** tokenize_input(char* input)
 {
-    // Remove trailing newline
-    input[strcspn(input, "\n")] = '\0';
+    int buff_size = TOK_SIZE
+    int position = 0;
 
-    // Count number of tokens
-    int i = 0, arg_count = 1;
-    while (input[i] != '\0')
+    char **tokens = malloc(buff_size * sizeof(char*));
+    char *token;
+
+    if (!tokens)
     {
-        if (input[i] == ' ')
-        {
-            arg_count++;
-        }
-        i++;
+        fprintf(stderr, "Memory allocation failed.\n");
+        exit(EXIT_FAILURE);
     }
 
-    // Allocate memory for token array (+1 for NULL terminator)
-    char** tokens = malloc(sizeof(char*) * (arg_count + 1));
-    if (tokens == NULL)
-    {
-        perror("Memory allocation failed");
-        exit(1);
-    }
-
-    // Tokenize input string
-    i = 0;
-    char* token = strtok(input, " ");
+    // Begin Parsing of inputs
+    token = strtok(input, TOK_DELIM);
     while (token != NULL)
     {
-        tokens[i] = malloc(strlen(token) + 1);
-        if (tokens[i] == NULL)
+        tokens[position] = token;
+        position++;
+
+        // Check for Resize
+        if (position >= buff_size)
         {
-            perror("Memory allocation failed");
-
-            // Free already allocated tokens
-            for (int j = 0; j < i; j++)
+            buff_size += TOK_SIZE;
+            tokens = realloc(tokens, buff_size * sizeof(char*));
+            if (tokens == NULL)
             {
-                free(tokens[j]);
+                fprintf(stderr, "Memory allocation failed.\n");
+                exit(EXIT_FAILURE);
             }
-            free(tokens);
-            exit(1);
         }
-        strcpy(tokens[i], token);
-        i++;
-        token = strtok(NULL, " ");
+        token = strtok(NULL, TOK_DELIM)
     }
-
-    // Null-terminate the token array
-    tokens[i] = NULL;
-    
+    // Append NULL to end of tokens list
+    tokens[position] = NULL;
     return tokens;
 }
 
