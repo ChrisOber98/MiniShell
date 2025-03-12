@@ -2,6 +2,8 @@
 
 Node* ll_create_node(char * val)
 {
+	if (!val) val = "";
+
 	Node* new_node = (Node*)malloc(sizeof(Node*));
 	if (new_node == NULL)
 	{
@@ -9,7 +11,7 @@ Node* ll_create_node(char * val)
 		exit(EXIT_FAILURE);
 	}
 
-	new_node->data = val;
+	new_node->data = strdup(val);
 	new_node->next = NULL;
 
 	return new_node;

@@ -36,7 +36,7 @@ char* get_user_input()
         if (position >= buff_size)
         {
             buff_size += BUFFER_SIZE;
-            buffer = realloc(buffer, BUFFER_SIZE);
+            buffer = realloc(buffer, buff_size);
             if (buffer == NULL)
             {
                 fprintf(stderr, "Memory allocation failed.\n");        
@@ -44,6 +44,20 @@ char* get_user_input()
             }
         }
     }
+}
+
+int validate_command(const char *str)
+{
+    // Iterate over each character in the string
+    while (*str != '\0') 
+    {
+        if (!isspace(*str)) 
+        {
+            return 1; // If a non-space character is found, return false
+        }
+        str++;
+    }
+    return 0; // If the string only contains spaces, return true   
 }
 
 char** tokenize_input(char* input)

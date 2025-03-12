@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Iinclude
+CFLAGS = -Wall -Wextra -Iinclude -g
 SRC = mini_shell.c input.c main.c builtins.c executor.c linked_list.c history.c
 OBJ = $(SRC:.c=.o)
 TARGET = mini_shell

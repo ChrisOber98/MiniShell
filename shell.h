@@ -20,6 +20,8 @@ extern Node *history;
 extern int history_count;
 
 void store_command(char * command);
+void write_history();
+void read_history();
 
 // ----- input.c -----
 char* get_user_input();
@@ -34,6 +36,7 @@ int execute(char ** args);
 int cd(char **args);
 int help();
 int minishell_exit();
+int minishell_history();
 int num_builtins();
 
 extern char *builtin_str[];

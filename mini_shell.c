@@ -6,11 +6,16 @@ void run()
     char** args;
     int status;
 
+    read_history();
+
     do
     {
         printf("Minishell> ");
         line = get_user_input();
-        store_command(line);
+        if (validate_command(line))
+        {
+            store_command(line);
+        }
         args = tokenize_input(line);
         status = execute(args);
 

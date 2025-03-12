@@ -3,13 +3,15 @@
 char *builtin_str[] = {
     "cd",
     "help",
-    "exit"
+    "exit",
+    "history"
 };
 
 int (*builtin_func[]) (char **) = {
     &cd,
     &help,
-    &minishell_exit
+    &minishell_exit,
+    &minishell_history
 };
 
 int num_builtins()
@@ -51,5 +53,22 @@ int help()
 
 int minishell_exit()
 {
+	write_history();
+	
 	return 0;
+}
+
+int minishell_history()
+{
+	Node* cur = history;
+	int count = 0;
+
+	while (cur != NULL)
+	{
+		printf("%d. %s\n", count, cur->data);
+		cur = cur->next;
+		count += 1;
+	}
+
+	return 1;
 }
